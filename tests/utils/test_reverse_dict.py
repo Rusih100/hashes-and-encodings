@@ -14,5 +14,5 @@ from core.utils.reverse_dict import reverse_dict
         ({}, {}),
     ],
 )
-def test_reverse_dict(input_dict, expected_dict):
+def test_reverse_dict(input_dict: dict, expected_dict: dict):
     assert reverse_dict(input_dict) == expected_dict

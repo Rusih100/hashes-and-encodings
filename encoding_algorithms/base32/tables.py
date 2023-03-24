@@ -1,5 +1,7 @@
 from typing import Dict
 
+from core.utils.reverse_dict import reverse_dict
+
 ENCODING_TABLE: Dict[int, bytes] = {
     0b00000: b"A",
     0b00001: b"B",
@@ -34,3 +36,5 @@ ENCODING_TABLE: Dict[int, bytes] = {
     0b11110: b"6",
     0b11111: b"7",
 }
+
+DECODING_TABLE: Dict[bytes, int] = reverse_dict(ENCODING_TABLE)
