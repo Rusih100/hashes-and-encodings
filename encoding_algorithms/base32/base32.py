@@ -16,9 +16,9 @@ def base32_encode(data_bytes: bytes) -> bytes:
         bit_count = bytes_count * 8
         while bit_count > 0:
             if bit_count >= 5:
-                key = (block >> (bit_count - 5)) & 0b00011111
+                int_key = (block >> (bit_count - 5)) & 0b00011111
             else:
-                key = (block & (0b00011111 >> (5 - bit_count))) << (
+                int_key = (block & (0b00011111 >> (5 - bit_count))) << (
                     5 - bit_count
                 )
                 match bit_count:
@@ -31,7 +31,7 @@ def base32_encode(data_bytes: bytes) -> bytes:
                     case 2:
                         count_signs = 1
 
-            encoded_string += ENCODING_TABLE[key]
+            encoded_string += ENCODING_TABLE[int_key]
             bit_count -= 5
 
     encoded_string += b"=" * count_signs
@@ -56,8 +56,8 @@ def base32_decode(data_bytes: bytes) -> bytes:
         block = 1
         bit_count = 0
         for i in range(length_bytes_block):
-            key = bytes_block[i : i + 1]
-            block = (block << 5) | (DECODING_TABLE[key])
+            byte_key = bytes_block[i : i + 1]
+            block = (block << 5) | (DECODING_TABLE[byte_key])
             bit_count += 5
 
         if block_index + 8 > length_data:
