@@ -23,7 +23,7 @@ class TestBase32:
         assert base32_encode(input_bytes) == expected_bytes
 
     @pytest.mark.parametrize(  # Тесты на случайных байтах
-        "input_bytes", [(randbytes(randint(0, 20))) for i in range(15)]
+        "input_bytes", [(randbytes(randint(0, 30))) for i in range(30)]
     )
     def test_encode_random(self, input_bytes: bytes):
         assert base32_encode(input_bytes) == base64.b32encode(input_bytes)
@@ -44,7 +44,7 @@ class TestBase32:
         assert base32_decode(input_bytes) == expected_bytes
 
     @pytest.mark.parametrize(  # Тесты на случайных байтах
-        "input_bytes", [(randbytes(randint(0, 20))) for j in range(15)]
+        "input_bytes", [(randbytes(randint(0, 30))) for j in range(30)]
     )
     def test_reversibility_random(self, input_bytes: bytes):
         assert base32_decode(base32_encode(input_bytes)) == input_bytes

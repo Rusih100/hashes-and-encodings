@@ -1,4 +1,3 @@
-from core.utils.sizeof import sizeof_int
 from encoding_algorithms.base32.tables import DECODING_TABLE, ENCODING_TABLE
 
 
@@ -54,24 +53,36 @@ def base32_decode(data_bytes: bytes) -> bytes:
         bytes_block = data_bytes[block_index : block_index + 8]
         length_bytes_block = len(bytes_block)
 
-        block = 0
+        block = 1
+        bit_count = 0
         for i in range(length_bytes_block):
             key = bytes_block[i : i + 1]
             block = (block << 5) | (DECODING_TABLE[key])
+            bit_count += 5
 
-        if block.bit_length() < 39:
+        if block_index + 8 > length_data:
             match count_signs:
                 case 6:
                     block = block >> 2
+                    bit_count -= 2
                 case 4:
                     block = block >> 4
+                    bit_count -= 4
                 case 3:
                     block = block >> 1
+                    bit_count -= 1
                 case 1:
                     block = block >> 3
+                    bit_count -= 3
 
-        decoded_string += block.to_bytes(
-            length=sizeof_int(block), byteorder="big"
-        )
+        temp_byte_string: bytes = b""
+
+        while bit_count > 0:
+            byte = block & 0b11111111
+            temp_byte_string = bytes([byte]) + temp_byte_string
+            block = block >> 8
+            bit_count -= 8
+
+        decoded_string += temp_byte_string
 
     return decoded_string
