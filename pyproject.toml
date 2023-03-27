@@ -14,10 +14,13 @@ isort = "^5.12.0"
 
 [tool.black]
 line-length = 80
+target-version = ['py311']
 exclude = '''
 /(
   | \.git
   | \.mypy_cache
+  | env
+  | venv
 )/
 '''
 
