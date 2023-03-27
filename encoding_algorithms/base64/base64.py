@@ -10,7 +10,7 @@ def base64_encode(data_bytes: bytes) -> bytes:
         bytes_count = min(3, length_data - block_index)
 
         block = int.from_bytes(
-            data_bytes[block_index: block_index + 3], byteorder="big"
+            data_bytes[block_index : block_index + 3], byteorder="big"
         )
 
         bit_count = bytes_count * 8
@@ -19,7 +19,7 @@ def base64_encode(data_bytes: bytes) -> bytes:
                 int_key = (block >> (bit_count - 6)) & 0b00111111
             else:
                 int_key = (block & (0b00111111 >> (6 - bit_count))) << (
-                        6 - bit_count
+                    6 - bit_count
                 )
                 match bit_count:
                     case 4:
@@ -46,13 +46,13 @@ def base64_decode(data_bytes: bytes) -> bytes:
     length_data = len(data_bytes)
 
     for block_index in range(0, length_data, 8):
-        bytes_block: bytes = data_bytes[block_index: block_index + 8]
+        bytes_block: bytes = data_bytes[block_index : block_index + 8]
         length_bytes_block = len(bytes_block)
 
         block = 1
         bit_count = 0
         for i in range(length_bytes_block):
-            byte_key: bytes = bytes_block[i: i + 1]
+            byte_key: bytes = bytes_block[i : i + 1]
             block = (block << 6) | (DECODING_TABLE[byte_key])
             bit_count += 6
 

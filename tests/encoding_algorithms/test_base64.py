@@ -3,7 +3,7 @@ from random import randbytes, randint
 
 import pytest
 
-from encoding_algorithms.base64 import base64_encode, base64_decode
+from encoding_algorithms.base64 import base64_decode, base64_encode
 
 
 class TestBase64:
