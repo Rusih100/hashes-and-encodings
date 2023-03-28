@@ -51,18 +51,15 @@ class TestBase64:
         assert base64_decode(base64_encode(input_bytes)) == input_bytes
 
     @pytest.mark.parametrize(
-        "input_data",
-        ["Hello", 123, list(), dict(), tuple(), None]
+        "input_data", ["Hello", 123, list(), dict(), tuple(), None]
     )
     def test_incorrect_types_encode(self, input_data: Any):
         with pytest.raises(TypeError) as exp_info:
             base64_encode(input_data)
 
     @pytest.mark.parametrize(
-        "input_data",
-        ["Hello", 123, list(), dict(), tuple(), None]
+        "input_data", ["Hello", 123, list(), dict(), tuple(), None]
     )
     def test_incorrect_types_decode(self, input_data: Any):
         with pytest.raises(TypeError) as exp_info:
             base64_decode(input_data)
-
