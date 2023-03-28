@@ -1,16 +1,19 @@
 from encoding_algorithms.base64.tables import DECODING_TABLE, ENCODING_TABLE
 
 
-def base64_encode(data_bytes: bytes) -> bytes:
+def base64_encode(bytes_string: bytes) -> bytes:
+    if not isinstance(bytes_string, bytes):
+        raise TypeError(f"bytes string should be {bytes}, not be {type(bytes_string)}")
+
     encoded_string: bytes = b""
-    length_data = len(data_bytes)
+    length_bytes_string = len(bytes_string)
     count_signs = 0
 
-    for block_index in range(0, length_data, 3):
-        bytes_count = min(3, length_data - block_index)
+    for block_index in range(0, length_bytes_string, 3):
+        bytes_count = min(3, length_bytes_string - block_index)
 
         block = int.from_bytes(
-            data_bytes[block_index : block_index + 3], byteorder="big"
+            bytes_string[block_index: block_index + 3], byteorder="big"
         )
 
         bit_count = bytes_count * 8
@@ -35,18 +38,21 @@ def base64_encode(data_bytes: bytes) -> bytes:
     return encoded_string
 
 
-def base64_decode(data_bytes: bytes) -> bytes:
+def base64_decode(bytes_string: bytes) -> bytes:
+    if not isinstance(bytes_string, bytes):
+        raise TypeError(f"bytes string should be {bytes}, not be {type(bytes_string)}")
+
     decoded_string: bytes = b""
     count_signs = 0
 
-    while data_bytes.rfind(b"=") != -1:
-        data_bytes = data_bytes[:-1]
+    while bytes_string.rfind(b"=") != -1:
+        bytes_string = bytes_string[:-1]
         count_signs += 1
 
-    length_data = len(data_bytes)
+    length_bytes_string = len(bytes_string)
 
-    for block_index in range(0, length_data, 8):
-        bytes_block: bytes = data_bytes[block_index : block_index + 8]
+    for block_index in range(0, length_bytes_string, 8):
+        bytes_block: bytes = bytes_string[block_index: block_index + 8]
         length_bytes_block = len(bytes_block)
 
         block = 1
@@ -56,7 +62,7 @@ def base64_decode(data_bytes: bytes) -> bytes:
             block = (block << 6) | (DECODING_TABLE[byte_key])
             bit_count += 6
 
-        if block_index + 8 > length_data:
+        if block_index + 8 > length_bytes_string:
             match count_signs:
                 case 1:
                     block = block >> 2

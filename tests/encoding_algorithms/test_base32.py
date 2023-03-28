@@ -1,5 +1,6 @@
 import base64
 from random import randbytes, randint
+from typing import Any
 
 import pytest
 
@@ -48,3 +49,20 @@ class TestBase32:
     )
     def test_reversibility_random(self, input_bytes: bytes):
         assert base32_decode(base32_encode(input_bytes)) == input_bytes
+
+    @pytest.mark.parametrize(
+        "input_data",
+        ["Hello", 123, list(), dict(), tuple(), None]
+    )
+    def test_incorrect_types_encode(self, input_data: Any):
+        with pytest.raises(TypeError) as exp_info:
+            base32_encode(input_data)
+
+    @pytest.mark.parametrize(
+        "input_data",
+        ["Hello", 123, list(), dict(), tuple(), None]
+    )
+    def test_incorrect_types_decode(self, input_data: Any):
+        with pytest.raises(TypeError) as exp_info:
+            base32_decode(input_data)
+
