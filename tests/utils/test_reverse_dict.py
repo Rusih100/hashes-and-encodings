@@ -1,6 +1,6 @@
 import pytest
 
-from core.utils.reverse_dict import reverse_dict
+from core.utils import reverse_dict
 
 
 @pytest.mark.parametrize(
