@@ -3,7 +3,9 @@ from encoding_algorithms.base64.tables import DECODING_TABLE, ENCODING_TABLE
 
 def base64_encode(bytes_string: bytes) -> bytes:
     if not isinstance(bytes_string, bytes):
-        raise TypeError(f"bytes string should be {bytes}, not be {type(bytes_string)}")
+        raise TypeError(
+            f"bytes string should be {bytes}, not be {type(bytes_string)}"
+        )
 
     encoded_string: bytes = b""
     length_bytes_string = len(bytes_string)
@@ -13,7 +15,7 @@ def base64_encode(bytes_string: bytes) -> bytes:
         bytes_count = min(3, length_bytes_string - block_index)
 
         block = int.from_bytes(
-            bytes_string[block_index: block_index + 3], byteorder="big"
+            bytes_string[block_index : block_index + 3], byteorder="big"
         )
 
         bit_count = bytes_count * 8
@@ -40,7 +42,9 @@ def base64_encode(bytes_string: bytes) -> bytes:
 
 def base64_decode(bytes_string: bytes) -> bytes:
     if not isinstance(bytes_string, bytes):
-        raise TypeError(f"bytes string should be {bytes}, not be {type(bytes_string)}")
+        raise TypeError(
+            f"bytes string should be {bytes}, not be {type(bytes_string)}"
+        )
 
     decoded_string: bytes = b""
     count_signs = 0
@@ -52,7 +56,7 @@ def base64_decode(bytes_string: bytes) -> bytes:
     length_bytes_string = len(bytes_string)
 
     for block_index in range(0, length_bytes_string, 8):
-        bytes_block: bytes = bytes_string[block_index: block_index + 8]
+        bytes_block: bytes = bytes_string[block_index : block_index + 8]
         length_bytes_block = len(bytes_block)
 
         block = 1
