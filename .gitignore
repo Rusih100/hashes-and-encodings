@@ -1,0 +1,6 @@
+# IDE
+.idea
+
+# pytest
+.pytest_cache
+.coverage
