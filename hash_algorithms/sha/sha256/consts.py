@@ -76,3 +76,5 @@ INIT_HASH_CONSTS = (
     0x1F83D9AB,
     0x5BE0CD19,
 )
+
+MOD = 1 << 32
