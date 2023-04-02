@@ -1,18 +1,18 @@
 from typing import List
 
+from hash_algorithms.sha.message_preprocess import message_preprocess
 from hash_algorithms.sha.operations import choose, majority
 from hash_algorithms.sha.sha256.consts import INIT_HASH_CONSTS, K_CONSTS, MOD
 from hash_algorithms.sha.sha256.operations import (
     big_sigma0,
     big_sigma1,
-    message_preprocess,
     sigma0,
     sigma1,
 )
 
 
 def sha256(bytes_string: bytes) -> bytes:
-    blocks: List[bytes] = message_preprocess(bytes_string)
+    blocks: List[bytes] = message_preprocess(bytes_string, block_size=512)
 
     h0, h1, h2, h3, h4, h5, h6, h7 = INIT_HASH_CONSTS
 
