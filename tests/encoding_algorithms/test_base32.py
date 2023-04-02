@@ -4,7 +4,7 @@ from typing import Any
 
 import pytest
 
-from encoding_algorithms.base32 import base32_decode, base32_encode
+from encoding_algorithms import base32_decode, base32_encode
 
 
 class TestBase32:

@@ -1,6 +1,6 @@
 from typing import Dict
 
-from core.utils.reverse_dict import reverse_dict
+from core.utils import reverse_dict
 
 ENCODING_TABLE: Dict[int, bytes] = {
     0b000000: b"A",
