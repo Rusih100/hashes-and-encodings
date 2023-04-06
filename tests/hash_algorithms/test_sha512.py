@@ -37,7 +37,7 @@ class TestSHA512:
         assert sha512(input_bytes).hex() == expected_hash
 
     @pytest.mark.parametrize(  # Тесты на случайных байтах
-        "input_bytes", [(randbytes(randint(0, 100))) for j in range(30)]
+        "input_bytes", [(randbytes(randint(0, 200))) for _ in range(30)]
     )
     def test_random_hashing(self, input_bytes: bytes):
         assert (
