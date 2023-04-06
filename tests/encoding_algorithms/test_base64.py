@@ -4,7 +4,7 @@ from typing import Any
 
 import pytest
 
-from encoding_algorithms.base64 import base64_decode, base64_encode
+from encoding_algorithms import base64_decode, base64_encode
 
 
 class TestBase64:
