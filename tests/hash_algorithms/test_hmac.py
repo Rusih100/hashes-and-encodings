@@ -4,7 +4,7 @@ from random import randbytes, randint
 
 import pytest
 
-from hash_algorithms.hmac import hmac
+from hash_algorithms import hmac
 from hash_algorithms.sha import sha256, sha512
 
 
