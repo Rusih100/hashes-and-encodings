@@ -1,0 +1,1 @@
+from hash_algorithms.stribog.stribog512.stribog512 import stribog512
