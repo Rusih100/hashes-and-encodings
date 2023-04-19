@@ -4,7 +4,7 @@ from random import randbytes, randint
 
 import pytest
 
-from hash_algorithms.hmac import hmac
+from hash_algorithms import hmac
 from hash_algorithms.sha import sha256, sha512
 
 
@@ -53,11 +53,15 @@ class TestHMAC:
     @pytest.mark.parametrize(  # Тесты на случайных байтах
         "key, message",
         [
-            (randbytes(randint(0, 200)), randbytes(randint(0, 200))) for _ in range(30)
-        ]
+            (randbytes(randint(0, 200)), randbytes(randint(0, 200)))
+            for _ in range(30)
+        ],
     )
     def test_random_hashing_sha256(self, key: bytes, message: bytes):
-        assert hmac(key, message, 512, sha256).hex() == lib_hmac.new(key, message, hashlib.sha256).hexdigest()
+        assert (
+            hmac(key, message, 512, sha256).hex()
+            == lib_hmac.new(key, message, hashlib.sha256).hexdigest()
+        )
 
     @pytest.mark.parametrize(
         "key, message, expected_hash",
@@ -109,8 +113,12 @@ class TestHMAC:
     @pytest.mark.parametrize(  # Тесты на случайных байтах
         "key, message",
         [
-            (randbytes(randint(0, 200)), randbytes(randint(0, 200))) for _ in range(30)
-        ]
+            (randbytes(randint(0, 200)), randbytes(randint(0, 200)))
+            for _ in range(30)
+        ],
     )
     def test_random_hashing_sha512(self, key: bytes, message: bytes):
-        assert hmac(key, message, 1024, sha512).hex() == lib_hmac.new(key, message, hashlib.sha512).hexdigest()
+        assert (
+            hmac(key, message, 1024, sha512).hex()
+            == lib_hmac.new(key, message, hashlib.sha512).hexdigest()
+        )
