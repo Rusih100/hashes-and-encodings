@@ -7,14 +7,14 @@ from hash_algorithms.stribog.utils import add512bit
 
 def stribog512(bytes_string: bytes) -> bytes:
     hash_: bytes = BLOCKSIZE * b"\x00"
-    chunk: bytes = BLOCKSIZE * b"\x00"
+    sigma: bytes = BLOCKSIZE * b"\x00"
     n = 0
     data = bytes_string
 
     for i in range(0, len(data) // BLOCKSIZE * BLOCKSIZE, BLOCKSIZE):
         block = data[i : i + BLOCKSIZE]
         hash_ = g(n, hash_, block)
-        chunk = add512bit(chunk, block)
+        sigma = add512bit(sigma, block)
         n += 512
 
     padding_block_size = len(data) * 8 - n
@@ -25,8 +25,8 @@ def stribog512(bytes_string: bytes) -> bytes:
 
     hash_ = g(n, hash_, data[-BLOCKSIZE:])
     n += padding_block_size
-    chunk = add512bit(chunk, data[-BLOCKSIZE:])
+    sigma = add512bit(sigma, data[-BLOCKSIZE:])
     hash_ = g(0, hash_, pack("<Q", n) + 56 * b"\x00")
-    hash_ = g(0, hash_, chunk)
+    hash_ = g(0, hash_, sigma)
 
     return hash_
